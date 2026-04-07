@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Магазин</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'shop:index' %}">Главная магазина</a> |
+        <a href="{% url 'blog:post_list' %}">Перейти в Блог</a>
+    </nav>
+    <hr>
+
+    <h1>Список товаров</h1>
+
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }} — {{ product.price }} тг.</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+    <div>
+        <p><strong>Статистика цен:</strong></p>
+        <p>Сумма всех цен: {{ total_price.total }}</p>
+        <p>Минимальная цена: {{ extremes.min }}</p>
+        <p>Максимальная цена: {{ extremes.max }}</p>
+    </div>
+</body>
+</html>

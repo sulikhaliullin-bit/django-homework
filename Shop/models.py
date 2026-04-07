@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
-# эта функция нужна, чтобы миграции не выдавали ошибку
+
 def validate_even_number(value):
     if value % 2 != 0:
         raise ValidationError('число должно быть четным')

@@ -3,5 +3,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ads/', include('advertisements.urls')), # проверь, чтобы здесь было 'ads/'
+    path('ads/', include('advertisements.urls')),
 ]

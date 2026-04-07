@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import MyNewModel  # Импортируем именно MyNewModel
+from .models import MyNewModel
 
-admin.site.register(MyNewModel) # Регистрируем её
+admin.site.register(MyNewModel)

@@ -1,29 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Магазин</title>
+    <meta charset="UTF-8">
+    <title>Список задач</title>
 </head>
 <body>
     <nav>
-        <a href="{% url 'shop:index' %}">Главная магазина</a> |
-        <a href="{% url 'blog:post_list' %}">Перейти в Блог</a>
+        <a href="{% url 'task_list' %}">Главная</a> |
+        <a href="{% url 'task_create' %}">Добавить задачу</a>
     </nav>
     <hr>
-
-    <h1>Список товаров</h1>
-
+    <h1>Все задачи</h1>
     <ul>
-        {% for product in products %}
-            <li>{{ product.name }} — {{ product.price }} тг.</li>
+        {% for task in tasks %}
+            <li>
+                <strong>{{ task.title }}</strong>
+                <a href="{% url 'task_detail' task.pk %}">Подробнее</a> |
+                <a href="{% url 'task_delete' task.pk %}">Удалить</a>
+            </li>
+        {% empty %}
+            <li>Задач пока нет.</li>
         {% endfor %}
     </ul>
-
-    <hr>
-    <div>
-        <p><strong>Статистика цен:</strong></p>
-        <p>Сумма всех цен: {{ total_price.total }}</p>
-        <p>Минимальная цена: {{ extremes.min }}</p>
-        <p>Максимальная цена: {{ extremes.max }}</p>
-    </div>
 </body>
 </html>

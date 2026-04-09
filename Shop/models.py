@@ -1,19 +1,14 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 
-
+# ДОБАВЬ ЭТОТ БЛОК:
 def validate_even_number(value):
-    if value % 2 != 0:
-        raise ValidationError('число должно быть четным')
+    pass
 
-class Bb(models.Model):
-    title = models.CharField(max_length=50, verbose_name='товар')
-    content = models.TextField(null=True, blank=True, verbose_name='описание')
-    price = models.FloatField(null=True, blank=True, verbose_name='цена')
-    published = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='опубликовано')
-    count = models.IntegerField(default=0, validators=[validate_even_number], verbose_name='количество')
+# Твоя модель задач:
+class Task(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Заголовок")
+    description = models.TextField(verbose_name="Описание", blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        verbose_name_plural = 'объявления'
-        verbose_name = 'объявление'
-        ordering = ['-published']
+    def __str__(self):
+        return self.title

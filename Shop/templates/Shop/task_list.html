@@ -1,0 +1,14 @@
+<h1>Список всех задач</h1>
+<a href="{% url 'task_create' %}">Добавить задачу</a>
+<hr>
+<ul>
+    {% for task in tasks %}
+        <li>
+            <strong>{{ task.title }}</strong>
+            <a href="{% url 'task_detail' task.pk %}">Просмотр</a> |
+            <a href="{% url 'task_delete' task.pk %}">Удалить</a>
+        </li>
+    {% empty %}
+        <li>Задач пока нет.</li>
+    {% endfor %}
+</ul>

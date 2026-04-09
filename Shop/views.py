@@ -1,14 +1,25 @@
-from django.http import HttpResponse, JsonResponse
-from .models import Bb
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Task
 
-def hello_world(request):
-    return HttpResponse("<h1>Привет!</h1><p>Это строка с HTML тегами.</p>")
+def task_list(request):
+    tasks = Task.objects.all()
+    return render(request, 'Shop/task_list.html', {'tasks': tasks})
 
-def get_data(request):
-    data = [x for x in range(1, 11)]
-    return JsonResponse(data, safe=False)
+def task_detail(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    return render(request, 'Shop/task_detail.html', {'task': task})
 
-def filter_data(request):
+def task_create(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        Task.objects.create(title=title, description=description)
+        return redirect('task_list')
+    return render(request, 'Shop/task_form.html')
 
-    results = Bb.objects.values('title', 'price').exclude(price__isnull=True).exclude(price=0)
-    return JsonResponse(list(results), safe=False)
+def task_delete(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    if request.method == "POST":
+        task.delete()
+        return redirect('task_list')
+    return render(request, 'Shop/task_confirm_delete.html', {'task': task})

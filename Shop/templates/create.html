@@ -5,15 +5,13 @@
     <title>Добавление объявления</title>
 </head>
 <body>
-    <h2>Новое объявление</h2>
-
-    <form action="/add/" method="post">
+    <h1>Добавить новое объявление</h1>
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Опубликовать</button>
+        <button type="submit">Добавить</button>
     </form>
-
-    <br>
-    <a href="/">На главную</a>
+    <hr>
+    <p><a href="{% url 'index' %}">На главную</a></p>
 </body>
 </html>

@@ -1,14 +1,10 @@
-<h3>Список технологий:</h3>
-<ul>
-    {% for item in test_list %}
-        {% if forloop.first %}
-            <li><strong>{{ item|upper }}</strong> (первый элемент)</li>
-        {% else %}
-            <li>{{ item|lower }}</li>
-        {% endif %}
-    {% endfor %}
-</ul>
+<hr>
+<h2>Практическая работа №22: Фильтры</h2>
 
-<p>Дата обновления: {{ current_date|date:"d.m.Y H:i" }}</p>
+<p>Имя пользователя: {{ user_name|capfirst }}</p>
 
-<p>Дополнительная информация: {{ some_empty_var|default:"Нет данных" }}</p>
+<p>Краткое описание: {{ long_text|truncatewords:4 }}</p>
+
+<p>Цена со скидкой: {{ price|floatformat:1 }} руб.</p>
+
+<p>Количество товаров после добавления одного: {{ items_count|add:1 }}</p>

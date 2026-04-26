@@ -1,11 +1,22 @@
-<h1>Список книг</h1>
-<a href="{% url 'book_create' %}">Добавить книгу</a>
-<form method="GET">
-    <input type="text" name="q" placeholder="Поиск...">
-    <button type="submit">Найти</button>
-</form>
-<ul>
-    {% for book in books %}
-        <li>{{ book.title }} — <a href="{% url 'book_detail' book.id %}">Подробнее</a></li>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Лист задач</title>
+</head>
+<body>
+    <h1>Мой список задач</h1>
+    <hr>
+
+    {% for task in tasks %}
+        <div style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;">
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.content|default:"Нет описания" }}</p>
+            <p>Статус: {% if task.is_completed %} ✅ Выполнено {% else %} ❌ В процессе {% endif %}</p>
+            <small>Создано: {{ task.created_at|date:"d.m.Y H:i" }}</small>
+        </div>
+    {% empty %}
+        <p>Задач пока нет. Добавьте их через админку!</p>
     {% endfor %}
-</ul>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import BbIndexView, BbCreateView # Импортируем классы
+from .views import BbIndexView, TaskListView
 
 urlpatterns = [
-    path('', BbIndexView.as_view(), name='index'), # Обязательно .as_view()
-    path('add/', BbCreateView.as_view(), name='add'),
+    path('', BbIndexView.as_view(), name='index'),
+    path('tasks/', TaskListView.as_view(), name='task_list'),
 ]

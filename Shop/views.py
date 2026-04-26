@@ -1,25 +1,33 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Task
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
+from django.views.generic.base import RedirectView
+from django.utils import timezone
+from .models import Bb, Rubric
+from .forms import BbForm
 
-def task_list(request):
-    tasks = Task.objects.all()
-    return render(request, 'Shop/task_list.html', {'tasks': tasks})
+class BbIndexView(ListView):
+    model = Bb
+    template_name = 'Shop/index.html'
+    context_object_name = 'bbs'
 
-def task_detail(request, pk):
-    task = get_object_or_404(Task, pk=pk)
-    return render(request, 'Shop/task_detail.html', {'task': task})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['rubrics'] = Rubric.objects.all()
+        # Данные для задания №22
+        context['test_list'] = ['django', 'python', 'web', 'framework']
+        context['current_date'] = timezone.now()
+        return context
 
-def task_create(request):
-    if request.method == "POST":
-        title = request.POST.get('title')
-        description = request.POST.get('description')
-        Task.objects.create(title=title, description=description)
-        return redirect('task_list')
-    return render(request, 'Shop/task_form.html')
+class BbCreateView(CreateView):
+    template_name = 'create.html'
+    form_class = BbForm
+    success_url = reverse_lazy('index')
 
-def task_delete(request, pk):
-    task = get_object_or_404(Task, pk=pk)
-    if request.method == "POST":
-        task.delete()
-        return redirect('task_list')
-    return render(request, 'Shop/task_confirm_delete.html', {'task': task})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['rubrics'] = Rubric.objects.all()
+        return context
+
+class MyRedirectView(RedirectView):
+    url = '/'

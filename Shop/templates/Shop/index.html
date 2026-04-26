@@ -1,26 +1,14 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Список задач</title>
-</head>
-<body>
-    <nav>
-        <a href="{% url 'task_list' %}">Главная</a> |
-        <a href="{% url 'task_create' %}">Добавить задачу</a>
-    </nav>
-    <hr>
-    <h1>Все задачи</h1>
-    <ul>
-        {% for task in tasks %}
-            <li>
-                <strong>{{ task.title }}</strong>
-                <a href="{% url 'task_detail' task.pk %}">Подробнее</a> |
-                <a href="{% url 'task_delete' task.pk %}">Удалить</a>
-            </li>
-        {% empty %}
-            <li>Задач пока нет.</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+<h3>Список технологий:</h3>
+<ul>
+    {% for item in test_list %}
+        {% if forloop.first %}
+            <li><strong>{{ item|upper }}</strong> (первый элемент)</li>
+        {% else %}
+            <li>{{ item|lower }}</li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+<p>Дата обновления: {{ current_date|date:"d.m.Y H:i" }}</p>
+
+<p>Дополнительная информация: {{ some_empty_var|default:"Нет данных" }}</p>

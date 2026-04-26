@@ -1,14 +1,11 @@
-<h1>Список всех задач</h1>
-<a href="{% url 'task_create' %}">Добавить задачу</a>
-<hr>
+<h1>Список книг</h1>
+<a href="{% url 'book_create' %}">Добавить книгу</a>
+<form method="GET">
+    <input type="text" name="q" placeholder="Поиск...">
+    <button type="submit">Найти</button>
+</form>
 <ul>
-    {% for task in tasks %}
-        <li>
-            <strong>{{ task.title }}</strong>
-            <a href="{% url 'task_detail' task.pk %}">Просмотр</a> |
-            <a href="{% url 'task_delete' task.pk %}">Удалить</a>
-        </li>
-    {% empty %}
-        <li>Задач пока нет.</li>
+    {% for book in books %}
+        <li>{{ book.title }} — <a href="{% url 'book_detail' book.id %}">Подробнее</a></li>
     {% endfor %}
 </ul>

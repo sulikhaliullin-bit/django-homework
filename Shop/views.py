@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from .models import Lesson  # Импорт модели Lesson
-
+from .models import Lesson
 
 def lesson_list_manual(request):
     lessons_query = Lesson.objects.all().order_by('id')
@@ -19,5 +18,4 @@ def lesson_list_manual(request):
         'has_next': end < lessons_query.count(),
         'has_prev': current_page > 1,
     }
-    # Используем 'Shop/task_list.html', так как он есть в папке Shop
     return render(request, 'Shop/task_list.html', context)

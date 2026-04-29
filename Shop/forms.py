@@ -1,5 +1,5 @@
 from django import forms
-from Shop.models import Lesson  # Импорт именно из вашего приложения Shop
+from Shop.models import Lesson
 
 class LessonForm(forms.ModelForm):
     class Meta:

@@ -1,24 +1,18 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 
-def validate_even_number(value):
-    if value % 2 != 0:
-        raise ValidationError('Число должно быть четным')
+class Course(models.Model): # [cite: 23]
+    title = models.CharField(max_length=200, verbose_name="Название") # [cite: 26]
+    description = models.TextField(verbose_name="Описание") # [cite: 27]
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания") # [cite: 28]
 
-class Rubric(models.Model):
-    name = models.CharField(max_length=20, db_index=True, verbose_name='Название')
     def __str__(self):
-        return self.name
+        return self.title
 
-class Bb(models.Model):
-    title = models.CharField(max_length=50, verbose_name='Товар')
-    content = models.TextField(null=True, blank=True, verbose_name='Описание')
-    price = models.FloatField(null=True, blank=True, verbose_name='Цена')
-    published = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
-    rubric = models.ForeignKey(Rubric, null=True, on_delete=models.PROTECT, verbose_name='Рубрика')
+class Lesson(models.Model): # [cite: 29]
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons') # [cite: 33]
+    title = models.CharField(max_length=200, verbose_name="Название") # [cite: 31]
+    content = models.TextField(verbose_name="Текст урока") # [cite: 32]
+    order = models.PositiveIntegerField(default=0, verbose_name="Порядок") # [cite: 34]
 
-class Task(models.Model):
-    title = models.CharField(max_length=100, verbose_name='Название задачи')
-    content = models.TextField(null=True, blank=True, verbose_name='Описание')
-    is_completed = models.BooleanField(default=False, verbose_name='Выполнено')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    def __str__(self):
+        return self.title

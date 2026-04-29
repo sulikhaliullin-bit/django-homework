@@ -1,35 +1,23 @@
-from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
-from .models import Bb, Rubric, Task
-from .forms import BbForm
+from django.shortcuts import render
+from .models import Lesson  # Импорт модели Lesson
 
-class BbIndexView(ListView):
-    model = Bb
-    template_name = 'Shop/index.html'
-    context_object_name = 'bbs'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['rubrics'] = Rubric.objects.all()
-        # Твои данные для фильтров
-        context['user_name'] = 'Sulik'
-        context['long_text'] = 'Это очень длинный текст, который мы обрежем'
-        context['price'] = 1500.50
-        context['items_count'] = 5
-        return context
+def lesson_list_manual(request):
+    lessons_query = Lesson.objects.all().order_by('id')
 
-class TaskListView(ListView):
-    model = Task
-    template_name = 'Shop/task_list.html'
-    context_object_name = 'tasks'
+    items_per_page = 5
+    current_page = int(request.GET.get('page', 1))
 
-class BbCreateView(CreateView):
-    template_name = 'Shop/create.html'
-    form_class = BbForm
-    success_url = reverse_lazy('index')
+    start = (current_page - 1) * items_per_page
+    end = start + items_per_page
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['rubrics'] = Rubric.objects.all()
-        return context
+    page_obj = lessons_query[start:end]
+
+    context = {
+        'lessons': page_obj,
+        'current_page': current_page,
+        'has_next': end < lessons_query.count(),
+        'has_prev': current_page > 1,
+    }
+    # Используем 'Shop/task_list.html', так как он есть в папке Shop
+    return render(request, 'Shop/task_list.html', context)

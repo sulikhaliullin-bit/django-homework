@@ -1,8 +1,8 @@
+# mysite/urls.py
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Эта строка — мост к твоему приложению Shop
-    path('', include('Shop.urls')),
+    path('shop/', include('Shop.urls')), # Подключаем приложение Shop
 ]

@@ -1,7 +1,13 @@
 from django import forms
-from .models import Bb
+from Shop.models import Lesson  # Импорт именно из вашего приложения Shop
 
-class BbForm(forms.ModelForm):
+class LessonForm(forms.ModelForm):
     class Meta:
-        model = Bb
-        fields = ('title', 'content', 'price', 'rubric')
+        model = Lesson
+        fields = ('title', 'content', 'course', 'order')
+        labels = {
+            'title': 'Название урока',
+            'content': 'Содержание',
+            'course': 'Курс',
+            'order': 'Порядок',
+        }

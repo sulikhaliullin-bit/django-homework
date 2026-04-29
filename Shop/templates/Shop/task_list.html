@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Лист задач</title>
+    <meta charset="UTF-8">
+    <title>Список уроков</title>
 </head>
 <body>
-    <h1>Мой список задач</h1>
-    <hr>
+    <h1>Список уроков</h1>
+    <ul>
+        {% for lesson in lessons %}
+            <li>{{ lesson.title }}</li>
+        {% empty %}
+            <li>Уроков пока нет. Добавьте их в админке.</li>
+        {% endfor %}
+    </ul>
 
-    {% for task in tasks %}
-        <div style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;">
-            <h3>{{ task.title }}</h3>
-            <p>{{ task.content|default:"Нет описания" }}</p>
-            <p>Статус: {% if task.is_completed %} ✅ Выполнено {% else %} ❌ В процессе {% endif %}</p>
-            <small>Создано: {{ task.created_at|date:"d.m.Y H:i" }}</small>
-        </div>
-    {% empty %}
-        <p>Задач пока нет. Добавьте их через админку!</p>
-    {% endfor %}
-
+    <div>
+        Страница {{ current_page }}
+    </div>
 </body>
 </html>

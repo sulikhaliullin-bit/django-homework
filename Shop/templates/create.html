@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Добавление объявления</title>
-</head>
-<body>
-    <h1>Добавить новое объявление</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Добавить</button>
-    </form>
-    <hr>
-    <p><a href="{% url 'index' %}">На главную</a></p>
-</body>
-</html>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+</form>

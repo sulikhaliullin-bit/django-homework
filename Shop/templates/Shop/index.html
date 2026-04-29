@@ -1,10 +1,13 @@
+<form method="get" action="{% url 'index' %}">
+    <input type="text" name="q" placeholder="Поиск курса..." value="{{ request.GET.q }}">
+    <button type="submit">Найти</button>
+</form>
+
 <hr>
-<h2>Практическая работа №22: Фильтры</h2>
 
-<p>Имя пользователя: {{ user_name|capfirst }}</p>
-
-<p>Краткое описание: {{ long_text|truncatewords:4 }}</p>
-
-<p>Цена со скидкой: {{ price|floatformat:1 }} руб.</p>
-
-<p>Количество товаров после добавления одного: {{ items_count|add:1 }}</p>
+{% for course in courses %}
+    <h2>{{ course.title }}</h2>
+    <p>{{ course.description }}</p>
+{% empty %}
+    <p>Курсы не найдены.</p>
+{% endfor %}

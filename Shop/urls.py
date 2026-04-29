@@ -1,8 +1,7 @@
+# Shop/urls.py
 from django.urls import path
-from .views import BbIndexView, TaskListView, BbCreateView
+from . import views
 
 urlpatterns = [
-    path('', BbIndexView.as_view(), name='index'),
-    path('tasks/', TaskListView.as_view(), name='task_list'),
-    path('add/', BbCreateView.as_view(), name='add'),
+    path('manual-list/', views.lesson_list_manual, name='manual_list'),
 ]

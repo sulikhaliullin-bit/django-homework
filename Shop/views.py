@@ -1,21 +1,19 @@
-from django.shortcuts import render
-from .models import Lesson
+from django.shortcuts import render, redirect
+from .forms import ProductFormSet
 
-def lesson_list_manual(request):
-    lessons_query = Lesson.objects.all().order_by('id')
+def manage_products(request):
+    if request.method == 'POST':
+        formset = ProductFormSet(request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('product_list')
+    else:
+        formset = ProductFormSet()
 
-    items_per_page = 5
-    current_page = int(request.GET.get('page', 1))
+    return render(request, 'Shop/create.html', {'formset': formset})
 
-    start = (current_page - 1) * items_per_page
-    end = start + items_per_page
 
-    page_obj = lessons_query[start:end]
-
-    context = {
-        'lessons': page_obj,
-        'current_page': current_page,
-        'has_next': end < lessons_query.count(),
-        'has_prev': current_page > 1,
-    }
-    return render(request, 'Shop/task_list.html', context)
+def product_list(request):
+    from .models import Product
+    products = Product.objects.all()
+    return render(request, 'Shop/index.html', {'products': products})

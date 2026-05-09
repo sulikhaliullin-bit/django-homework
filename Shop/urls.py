@@ -1,7 +1,7 @@
-# Shop/urls.py
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('manual-list/', views.lesson_list_manual, name='manual_list'),
+    path('', views.product_list, name='product_list'),
+    path('manage/', views.manage_products, name='manage_products'),
 ]

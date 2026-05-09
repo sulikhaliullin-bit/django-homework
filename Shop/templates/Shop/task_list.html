@@ -6,16 +6,20 @@
 </head>
 <body>
     <h1>Список уроков</h1>
+
+    <!-- Этот блок выводит данные из базы[cite: 1, 2] -->
     <ul>
-        {% for lesson in lessons %}
-            <li>{{ lesson.title }}</li>
+        {% for course in courses %}
+            <li>
+                <strong>{{ course.title }}</strong> — {{ course.description }}
+            </li>
         {% empty %}
-            <li>Уроков пока нет. Добавьте их в админке.</li>
+            <li>Пока курсов нет. Добавьте их через форму!</li>
         {% endfor %}
     </ul>
 
-    <div>
-        Страница {{ current_page }}
-    </div>
+    <br>
+    <!-- Ссылка для возврата к форме создания -->
+    <a href="{% url 'create_course' %}">Добавить новый курс</a>
 </body>
 </html>

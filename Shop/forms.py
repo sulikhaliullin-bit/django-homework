@@ -1,13 +1,9 @@
-from django import forms
-from Shop.models import Lesson
+from django.forms import modelformset_factory
+from .models import Product
 
-class LessonForm(forms.ModelForm):
-    class Meta:
-        model = Lesson
-        fields = ('title', 'content', 'course', 'order')
-        labels = {
-            'title': 'Название урока',
-            'content': 'Содержание',
-            'course': 'Курс',
-            'order': 'Порядок',
-        }
+ProductFormSet = modelformset_factory(
+    Product,
+    fields=('name', 'price', 'description'),
+    extra=2,
+    can_delete=True
+)

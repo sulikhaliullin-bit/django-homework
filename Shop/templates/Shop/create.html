@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление товарами</title>
+</head>
+<body>
+    <h1>Набор форм — Товары</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        {% for form in formset %}
+            <div style="border:1px solid #ccc; padding:10px; margin:10px 0;">
+                <h3>Товар {{ forloop.counter }}</h3>
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <br>
+    <a href="{% url 'product_list' %}">← Список товаров</a>
+</body>
+</html>

@@ -56,8 +56,8 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [], # Здесь можно оставить пусто или добавить [BASE_DIR / 'templates']
-        'APP_DIRS': True,  # ПРОВЕРЬТЕ: здесь должно быть True
+        'DIRS': [],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

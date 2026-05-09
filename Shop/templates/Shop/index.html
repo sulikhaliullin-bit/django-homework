@@ -1,13 +1,22 @@
-<form method="get" action="{% url 'index' %}">
-    <input type="text" name="q" placeholder="Поиск курса..." value="{{ request.GET.q }}">
-    <button type="submit">Найти</button>
-</form>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список товаров</title>
+</head>
+<body>
+    <h1>Список товаров</h1>
 
-<hr>
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li>{{ product.name }} — {{ product.price }} ₸</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Товаров пока нет.</p>
+    {% endif %}
 
-{% for course in courses %}
-    <h2>{{ course.title }}</h2>
-    <p>{{ course.description }}</p>
-{% empty %}
-    <p>Курсы не найдены.</p>
-{% endfor %}
+    <a href="{% url 'manage_products' %}">+ Добавить / редактировать</a>
+</body>
+</html>

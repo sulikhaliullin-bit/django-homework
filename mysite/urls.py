@@ -5,6 +5,6 @@ from django.shortcuts import redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/', include('Shop.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),  # встроенные urls авторизации
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', lambda request: redirect('icecream_list')),
 ]

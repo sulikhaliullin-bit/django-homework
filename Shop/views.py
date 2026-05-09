@@ -1,11 +1,10 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.dates import ArchiveIndexView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .models import Product
-from .forms import ProductFormSet
+from .models import Product, IceCream
+from .forms import ProductFormSet, IceCreamForm
 
 
 class ProductListView(ListView):
@@ -43,30 +42,38 @@ class PrivatePageView(LoginRequiredMixin, ListView):
     login_url = '/accounts/login/'
 
 
-def manage_products(request):
-    if request.method == 'POST':
+# manage_products переписан на класс
+class ManageProductsView(ListView):
+    model = Product
+    template_name = 'Shop/create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['formset'] = ProductFormSet()
+        return context
+
+    def post(self, request, *args, **kwargs):
         formset = ProductFormSet(request.POST)
         if formset.is_valid():
             formset.save()
             return redirect('product_list')
-    else:
-        formset = ProductFormSet()
-    return render(request, 'Shop/create.html', {'formset': formset})
-from .models import Product, IceCream
-from .forms import ProductFormSet, ProductForm, IceCreamForm
+        return self.get(request, *args, **kwargs)
+
+    def redirect(self, url):
+        from django.shortcuts import redirect
+        return redirect(url)
 
 
-def icecream_create(request):
-    if request.method == 'POST':
-        form = IceCreamForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('icecream_list')
-    else:
-        form = IceCreamForm()
-    return render(request, 'Shop/icecream_form.html', {'form': form})
+# icecream_create переписан на класс
+class IceCreamCreateView(CreateView):
+    model = IceCream
+    form_class = IceCreamForm
+    template_name = 'Shop/icecream_form.html'
+    success_url = reverse_lazy('icecream_list')
 
 
-def icecream_list(request):
-    icecreams = IceCream.objects.all()
-    return render(request, 'Shop/icecream_list.html', {'icecreams': icecreams})
+# icecream_list переписан на класс
+class IceCreamListView(ListView):
+    model = IceCream
+    template_name = 'Shop/icecream_list.html'
+    context_object_name = 'icecreams'

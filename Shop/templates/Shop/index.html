@@ -7,9 +7,9 @@
 <body>
     <h1>Список товаров</h1>
 
-    {% if products %}
+    {% if page_obj %}
         <ul>
-            {% for product in products %}
+            {% for product in page_obj %}
                 <li>{{ product.name }} — {{ product.price }} ₸</li>
             {% endfor %}
         </ul>
@@ -17,6 +17,22 @@
         <p>Товаров пока нет.</p>
     {% endif %}
 
-    <a href="{% url 'manage_products' %}">+ Добавить / редактировать</a>
+    <!-- Переключатель страниц -->
+    <div>
+        {% if page_obj.has_previous %}
+            <a href="?page=1">« Первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+        {% endif %}
+
+        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Вперёд</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Последняя »</a>
+        {% endif %}
+    </div>
+
+    <br>
+    <a href="{% url 'manage_products' %}">+ Добавить товары</a>
 </body>
 </html>

@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 from .forms import ProductFormSet
+from .models import Product
+
 
 def manage_products(request):
     if request.method == 'POST':
@@ -14,6 +17,10 @@ def manage_products(request):
 
 
 def product_list(request):
-    from .models import Product
     products = Product.objects.all()
-    return render(request, 'Shop/index.html', {'products': products})
+
+    paginator = Paginator(products, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'Shop/index.html', {'page_obj': page_obj})

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Приватная страница</title>
+</head>
+<body>
+    <h1>Привет, {{ request.user.username }}! 👋</h1>
+    <p>Эта страница доступна только авторизованным пользователям.</p>
+
+    <h2>Список товаров:</h2>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }} — {{ product.price }} ₸</li>
+        {% empty %}
+            <li>Товаров нет.</li>
+        {% endfor %}
+    </ul>
+
+    <br>
+    <a href="{% url 'product_list' %}">← На главную</a>
+    <a href="{% url 'logout' %}">Выйти</a>
+</body>
+</html>

@@ -1,6 +1,7 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.dates import ArchiveIndexView
 from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .models import Product
@@ -28,12 +29,18 @@ class ProductArchiveView(ArchiveIndexView):
     allow_empty = True
 
 
-# CreateView — получение данных от пользователя + перенаправление
 class ProductCreateView(CreateView):
     model = Product
     fields = ['name', 'price', 'description']
     template_name = 'Shop/product_form.html'
-    success_url = reverse_lazy('product_list')  # перенаправление после успеха
+    success_url = reverse_lazy('product_list')
+
+
+class PrivatePageView(LoginRequiredMixin, ListView):
+    model = Product
+    template_name = 'Shop/private.html'
+    context_object_name = 'products'
+    login_url = '/accounts/login/'
 
 
 def manage_products(request):

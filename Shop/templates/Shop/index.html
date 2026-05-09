@@ -10,14 +10,17 @@
     {% if page_obj %}
         <ul>
             {% for product in page_obj %}
-                <li>{{ product.name }} — {{ product.price }} ₸</li>
+                <li>
+                    <a href="{% url 'product_detail' product.pk %}">{{ product.name }}</a>
+                    — {{ product.price }} ₸
+                </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>Товаров пока нет.</p>
     {% endif %}
 
-    <!-- Переключатель страниц -->
+    <!-- Пагинатор -->
     <div>
         {% if page_obj.has_previous %}
             <a href="?page=1">« Первая</a>
@@ -33,6 +36,6 @@
     </div>
 
     <br>
-    <a href="{% url 'manage_products' %}">+ Добавить товары</a>
+    <a href="{% url 'product_archive' %}">📅 Хронологический список</a>
 </body>
 </html>

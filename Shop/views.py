@@ -1,7 +1,29 @@
+from django.views.generic import ListView, DetailView
+from django.views.generic.dates import ArchiveIndexView
 from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
-from .forms import ProductFormSet
 from .models import Product
+from .forms import ProductFormSet
+
+
+class ProductListView(ListView):
+    model = Product
+    template_name = 'Shop/index.html'
+    context_object_name = 'page_obj'
+    paginate_by = 3
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'Shop/detail.html'
+    context_object_name = 'product'
+
+
+class ProductArchiveView(ArchiveIndexView):
+    model = Product
+    template_name = 'Shop/archive.html'
+    context_object_name = 'products'
+    date_field = 'created_at'
+    allow_empty = True
 
 
 def manage_products(request):
@@ -12,15 +34,4 @@ def manage_products(request):
             return redirect('product_list')
     else:
         formset = ProductFormSet()
-
     return render(request, 'Shop/create.html', {'formset': formset})
-
-
-def product_list(request):
-    products = Product.objects.all()
-
-    paginator = Paginator(products, 3)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    return render(request, 'Shop/index.html', {'page_obj': page_obj})

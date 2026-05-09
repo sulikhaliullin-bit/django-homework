@@ -6,5 +6,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/', include('Shop.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', lambda request: redirect('icecream_list')),
+    path('', lambda request: redirect('product_list')),
 ]

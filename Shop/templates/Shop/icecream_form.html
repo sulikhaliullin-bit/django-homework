@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить мороженое</title>
+</head>
+<body>
+    <h1>Добавить мороженое</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <br>
+    <a href="{% url 'icecream_list' %}">← Список мороженого</a>
+</body>
+</html>

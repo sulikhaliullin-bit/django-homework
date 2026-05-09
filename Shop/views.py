@@ -52,3 +52,21 @@ def manage_products(request):
     else:
         formset = ProductFormSet()
     return render(request, 'Shop/create.html', {'formset': formset})
+from .models import Product, IceCream
+from .forms import ProductFormSet, ProductForm, IceCreamForm
+
+
+def icecream_create(request):
+    if request.method == 'POST':
+        form = IceCreamForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('icecream_list')
+    else:
+        form = IceCreamForm()
+    return render(request, 'Shop/icecream_form.html', {'form': form})
+
+
+def icecream_list(request):
+    icecreams = IceCream.objects.all()
+    return render(request, 'Shop/icecream_list.html', {'icecreams': icecreams})

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список мороженого</title>
+</head>
+<body>
+    <h1>Список мороженого</h1>
+
+    {% if icecreams %}
+        <ul>
+            {% for ice in icecreams %}
+                <li>{{ ice.name }} — {{ ice.flavor }} — {{ ice.price }} ₸</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Мороженого пока нет.</p>
+    {% endif %}
+
+    <a href="{% url 'icecream_create' %}">+ Добавить мороженое</a><br>
+    <a href="{% url 'product_list' %}">← На главную</a>
+</body>
+</html>

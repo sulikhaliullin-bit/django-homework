@@ -9,4 +9,6 @@ urlpatterns = [
     path('manage/', views.manage_products, name='manage_products'),
     path('create/', ProductCreateView.as_view(), name='product_create'),
     path('private/', PrivatePageView.as_view(), name='private_page'),
+    path('icecream/', views.icecream_list, name='icecream_list'),
+    path('icecream/create/', views.icecream_create, name='icecream_create'),
 ]
